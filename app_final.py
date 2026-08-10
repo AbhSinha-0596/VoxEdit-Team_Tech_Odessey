@@ -32,7 +32,6 @@ if (
     st.session_state.edit_history = []
     st.session_state.transcript = None
 
-# Show CURRENT image
 st.image(st.session_state.current_image, caption="Current Image", width=400)
 
 st.subheader("Voice Command")
@@ -46,7 +45,7 @@ audio = mic_recorder(
     key="voice_input"
 )
 
-# ---------- Speech to text ----------
+
 if audio:
     st.audio(audio["bytes"], format="audio/wav")
 
@@ -58,7 +57,7 @@ if audio:
     else:
         st.session_state.transcript = transcript
 
-# ---------- Command editing ----------
+
 if st.session_state.get("transcript"):
 
     st.subheader("Transcribed Speech")
@@ -82,7 +81,7 @@ if st.session_state.get("transcript"):
 
     col1, col2 = st.columns(2)
 
-    # ---------- Apply edits ----------
+    
     with col1:
         if st.button("Use This Command", use_container_width=True):
 
@@ -107,7 +106,6 @@ if st.session_state.get("transcript"):
                     for cmd in commands:
                         result = execute_command(result, cmd)
 
-                # Update current image
                 st.session_state.current_image = result
                 st.session_state.image_stack.append(result.copy())
 
@@ -117,7 +115,6 @@ if st.session_state.get("transcript"):
                     "commands": commands
                 })
 
-                # Store command sequence in Qdrant
                 store_mapping(edited_text, commands)
 
                 actions = [cmd.get("action", "edit") for cmd in commands]
@@ -161,18 +158,16 @@ if st.session_state.get("transcript"):
             else:
                 st.info("Nothing to undo.")
 
-    # ---------- Re-record ----------
     with col2:
         if st.button("Re-record", use_container_width=True):
             st.session_state.pop("transcript", None)
             st.session_state.pop("editable_transcript", None)
             st.rerun()
 
-# ---------- Final edited image ----------
+
 st.subheader("Edited Image")
 st.image(st.session_state.current_image, width=400)
 
-# Download without writing to disk
 buffer = BytesIO()
 st.session_state.current_image.save(buffer, format="JPEG")
 
