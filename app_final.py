@@ -9,8 +9,16 @@ from qdrant_memory import retrieve_similar, store_mapping
 from streamlit_mic_recorder import mic_recorder
 
 st.set_page_config(page_title="Speech based Image Editor", layout="wide")
+if "tts_audio" in st.session_state:
+    st.success(st.session_state.last_response)
+    st.audio(st.session_state.tts_audio, autoplay=True)
 
+    # Clear after playing once
+    del st.session_state.tts_audio
+    del st.session_state.last_response
+    
 st.title("Voice-Based AI Image Editor")
+
 st.write(
 "Speak naturally: 'Make the image warmer', 'Blur the background', 'Increase brightness by twenty percent'."
 )
@@ -25,12 +33,14 @@ if (
     "original_image" not in st.session_state
     or st.session_state.get("uploaded_name") != uploaded_name
 ):
+    
     st.session_state.uploaded_name = uploaded_name
     st.session_state.original_image = image
     st.session_state.current_image = image.copy()
     st.session_state.image_stack = [image.copy()]
     st.session_state.edit_history = []
     st.session_state.transcript = None
+
 
 st.image(st.session_state.current_image, caption="Current Image", width=400)
 
@@ -56,7 +66,6 @@ if audio:
         st.error(transcript)
     else:
         st.session_state.transcript = transcript
-
 
 if st.session_state.get("transcript"):
 
@@ -106,6 +115,7 @@ if st.session_state.get("transcript"):
                     for cmd in commands:
                         result = execute_command(result, cmd)
 
+                # Update current image
                 st.session_state.current_image = result
                 st.session_state.image_stack.append(result.copy())
 
@@ -115,6 +125,7 @@ if st.session_state.get("transcript"):
                     "commands": commands
                 })
 
+                # Store command sequence in Qdrant
                 store_mapping(edited_text, commands)
 
                 actions = [cmd.get("action", "edit") for cmd in commands]
@@ -123,22 +134,16 @@ if st.session_state.get("transcript"):
                     + ", ".join(actions)
                     + "."
                 )
-
                 try:
                     audio_path = text_to_speech(response)
-                    try:
-                        st.audio(audio_path, format="audio/wav", autoplay=True)
-                    except TypeError:
-                        st.audio(audio_path)
-
+                    st.session_state.tts_audio = audio_path
+                    st.session_state.last_response = response
+                    st.rerun()
                 except Exception as e:
                     st.warning(f"TTS failed: {e}")
-
-                st.success(response)
-                st.rerun()
-
             except Exception as e:
                 st.error(f"Image editing failed: {e}")
+
 
         if st.button("Undo Last Edit", use_container_width=True):
 
@@ -153,21 +158,30 @@ if st.session_state.get("transcript"):
                     st.session_state.edit_history.pop()
 
                 st.success("Last edit undone.")
-                st.rerun()
+                audio_path_1 = text_to_speech("Last edit undone")
+                st.session_state.tts_audio = audio_path_1
+                st.session_state.last_response = "Last edit undone"
+                st.rerun() 
 
             else:
                 st.info("Nothing to undo.")
+                audio_path_2 = text_to_speech("Nothing to undo")
+                st.session_state.tts_audio = audio_path_2
+                st.session_state.last_response = "Nothing to undo"
+                st.rerun()
+            
+
 
     with col2:
         if st.button("Re-record", use_container_width=True):
             st.session_state.pop("transcript", None)
             st.session_state.pop("editable_transcript", None)
-            st.rerun()
-
+    
 
 st.subheader("Edited Image")
 st.image(st.session_state.current_image, width=400)
 
+# Download without writing to disk
 buffer = BytesIO()
 st.session_state.current_image.save(buffer, format="JPEG")
 
