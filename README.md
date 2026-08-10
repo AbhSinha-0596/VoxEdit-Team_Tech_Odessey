@@ -17,7 +17,7 @@
 | -------------------------- | --------------------------------------- |
 | **Python**                 | Core application logic                  |
 | **Streamlit**              | User interface                          |
-| **OpenCV & Pillow (PIL)**  | Image processing                        |
+| **Pillow (PIL)**           | Image processing                        |
 | **Mistral AI API**         | Speech-to-text transcription            |
 | **Qdrant Vector Database** | Embedding storage and history retrieval |
 | **Sentence Transformers**  | Text embeddings                         |
