@@ -37,7 +37,7 @@
 
 **Voice command interface and image editing workflow**
 
-*Add screenshots here*
+
 
 ## Future Improvements
 
