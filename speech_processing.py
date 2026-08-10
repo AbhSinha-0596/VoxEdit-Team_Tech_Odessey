@@ -18,11 +18,6 @@ RIME_HEADERS = {
     "Accept":"audio/wav"
 }
 
-"""def speech_to_text(audio_bytes):
-    r = requests.post(HF_API, headers=HF_HEADERS, data=audio_bytes, timeout=60)
-    r.raise_for_status()
-    return r.json().get("text", "")"""
-
 def speech_to_text(audio_bytes: bytes) -> str:
     """response = requests.post(
         HF_API,
@@ -63,7 +58,7 @@ def text_to_speech(text: str):
     """r.raise_for_status()
     with open(out_file, "wb") as f:
         f.write(r.content)
-    return out_file"""
+    return out_file""
     if r.status_code != 200:
         raise Exception(f"Rime TTS error {r.status_code}: {r.text}")
 
