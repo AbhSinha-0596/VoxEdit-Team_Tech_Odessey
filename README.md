@@ -35,7 +35,25 @@
 
 ## Screenshots
 
-**Voice command interface and image editing workflow**
+<img width="1621" height="866" alt="Screenshot 2026-08-11 092355" src="https://github.com/user-attachments/assets/f3f35eed-49d9-4a51-9cd6-50a0477050de" />
+
+<img width="1626" height="873" alt="Screenshot 2026-08-11 092420" src="https://github.com/user-attachments/assets/6e3c03ab-20c6-4ad9-ae1e-576926720f45" />
+
+<img width="1629" height="865" alt="Screenshot 2026-08-11 092444" src="https://github.com/user-attachments/assets/e98a1510-fe16-4b86-aa67-ddeb2b2c31b2" />
+
+<img width="1628" height="855" alt="Screenshot 2026-08-11 092533" src="https://github.com/user-attachments/assets/7270ea01-45a7-45ca-808c-a4361f6b37e3" />
+
+<img width="1624" height="861" alt="Screenshot 2026-08-11 092604" src="https://github.com/user-attachments/assets/6b7e82b5-7ce0-41e1-b43d-86d08b53a3e6" />
+
+<img width="1623" height="866" alt="Screenshot 2026-08-11 092623" src="https://github.com/user-attachments/assets/f01c80e3-062d-4b73-885c-da4ba8c60c47" />
+
+<img width="1625" height="867" alt="Screenshot 2026-08-11 092651" src="https://github.com/user-attachments/assets/99a9a0b7-24ca-4d2f-9caa-b21ceed54ee7" />
+
+
+
+
+
+
 
 
 
