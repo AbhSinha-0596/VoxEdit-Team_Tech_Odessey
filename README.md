@@ -1,5 +1,5 @@
 
-# VoxEdit: Voice-based Image Editor   by Team_Tech_Odyssey
+# VoxEdit: Voice-based Image Editor   by Team_Tech Odyssey
 
 **VoxEdit** is a voice-controlled image editing application that allows users to modify images using natural speech commands. It integrates **Mistral AI** for speech-to-text transcription, **Qdrant** for session-aware memory retrieval, and **Rime API** for interactive voice responses, enabling a fast and conversational image editing workflow.
 
